@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conecta TEA — Internet do seu jeito</title>
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--text:#1e293b;--muted:#526174;--primary:#2457a7;--soft:#e7f0ff;--line:#dbe4ef}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+body.high-contrast{--bg:#000;--card:#111;--text:#fff;--muted:#eee;--primary:#ffeb3b;--soft:#222;--line:#fff}
+body.large-text{font-size:1.2rem}body.calm{font-family:Arial,sans-serif;letter-spacing:.02em}
+header{background:var(--card);border-bottom:1px solid var(--line);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-size:1.25rem;font-weight:800;color:var(--primary)}nav{display:flex;gap:10px;flex-wrap:wrap}button,a.btn{cursor:pointer;border:0;border-radius:12px;padding:11px 15px;font-weight:700;background:var(--soft);color:var(--text);text-decoration:none;font-size:1rem}button.primary,.primary{background:var(--primary);color:white}
+main{max-width:1100px;margin:auto;padding:28px 5% 60px}.hero{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:clamp(22px,5vw,48px);display:grid;grid-template-columns:1.4fr 1fr;gap:24px;align-items:center}
+h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.12;margin:0 0 18px}h2{margin-top:0;font-size:1.55rem}.muted{color:var(--muted)}.hero-art{background:var(--soft);border-radius:22px;padding:24px;text-align:center;font-size:4.5rem}
+section{margin-top:32px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px}.card h3{margin-top:0}.emoji{font-size:2rem}
+label{display:block;font-weight:700;margin:12px 0 6px}input,textarea,select{width:100%;padding:13px;border:1px solid var(--line);border-radius:12px;font:inherit;background:var(--card);color:var(--text)}textarea{min-height:110px;resize:vertical}.row{display:flex;gap:10px;flex-wrap:wrap}.row>*{flex:1}
+.result{white-space:pre-wrap;background:var(--soft);padding:16px;border-radius:14px;margin-top:14px;display:none}
+footer{text-align:center;padding:28px;color:var(--muted);border-top:1px solid var(--line)}
+.notice{font-size:.92rem;background:var(--soft);padding:14px;border-radius:12px;margin-top:12px}
+@media(max-width:760px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.hero-art{font-size:3rem}header{align-items:flex-start}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="brand">🌐 Conecta TEA</div><nav aria-label="Acessibilidade">
+<button onclick="document.body.classList.toggle('large-text')">A+ Texto</button><button onclick="document.body.classList.toggle('high-contrast')">Alto contraste</button><button onclick="document.body.classList.toggle('calm')">Modo tranquilo</button>
+</nav></header>
+<main>
+<div class="hero"><div><p class="muted"><strong>INTERNET DO SEU JEITO</strong></p><h1>Um espaço digital que respeita você.</h1><p class="muted">Aprenda, explore e se comunique na internet no seu ritmo. Com linguagem simples, ferramentas de acessibilidade e apoio de inteligência artificial.</p><a class="btn primary" href="#assistente">Experimentar o assistente</a></div><div class="hero-art" aria-hidden="true">🧩 💻 🌱</div></div>
+<section><h2>O que você quer fazer hoje?</h2><div class="grid">
+<article class="card"><div class="emoji">🔎</div><h3>Entender a internet</h3><p class="muted">Aprenda a pesquisar, usar sites e encontrar informações com orientações passo a passo.</p><button onclick="quickHelp('Quero aprender a pesquisar na internet, passo a passo.')">Começar</button></article>
+<article class="card"><div class="emoji">🛡️</div><h3>Navegar com segurança</h3><p class="muted">Veja dicas para proteger seus dados, reconhecer golpes e pedir ajuda quando precisar.</p><button onclick="quickHelp('Explique como navegar com segurança e reconhecer golpes na internet.')">Ver dicas</button></article>
+<article class="card"><div class="emoji">💬</div><h3>Comunicar do meu jeito</h3><p class="muted">Organize ideias e crie mensagens claras para conversar online.</p><button onclick="quickHelp('Me ajude a escrever uma mensagem curta e educada para alguém.')">Criar mensagem</button></article>
+</div></section>
+<section id="assistente"><h2>🤖 Assistente de apoio</h2><div class="card">
+<p class="muted">Escreva o que você precisa. O assistente usa inteligência artificial para criar orientações simples e passo a passo. Não informe senhas, documentos, endereço ou dados bancários.</p>
+<label for="need">Como posso ajudar?</label><textarea id="need" placeholder="Ex.: Quero criar um e-mail, mas não sei por onde começar."></textarea>
+<div class="row" style="margin-top:12px"><button id="send" class="primary" onclick="answer()">Receber orientação</button><button onclick="document.getElementById('need').value='';document.getElementById('result').style.display='none'">Limpar</button></div>
+<div id="result" class="result" role="status" aria-live="polite"></div>
+<div class="notice">Você decide o que compartilhar. Evite informar dados pessoais ou sensíveis. As mensagens são enviadas ao serviço de IA para gerar a resposta.</div>
+</div></section>
+<section><h2>Um site que se adapta a você</h2><div class="grid">
+<article class="card"><h3>🧘 Menos estímulos</h3><p class="muted">Layout simples, sem animações desnecessárias e com controles visíveis.</p></article>
+<article class="card"><h3>🧭 Passo a passo</h3><p class="muted">Instruções curtas, previsíveis e divididas em etapas.</p></article>
+<article class="card"><h3>🤝 Respeito às diferenças</h3><p class="muted">Preferências personalizáveis. Cada pessoa autista é única; você escolhe o que funciona.</p></article>
+</div></section></main>
+<footer>Conecta TEA · Ferramentas de acessibilidade digital · Feito para acolher diferentes formas de aprender e se comunicar.</footer>
+<script>
+function quickHelp(text){document.getElementById('need').value=text;document.getElementById('assistente').scrollIntoView({behavior:'smooth'});}
+async function answer(){
+ const q=document.getElementById('need').value.trim(), box=document.getElementById('result'), btn=document.getElementById('send');
+ if(!q){box.textContent='Escreva uma dúvida ou escolha uma das opções acima.';box.style.display='block';return;}
+ btn.disabled=true;btn.textContent='Preparando orientação...';box.textContent='Aguarde. Estou preparando uma resposta simples.';box.style.display='block';
+ try{
+  const response=await fetch('/.netlify/functions/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:q})});
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok) throw new Error(data.error||'Não foi possível obter uma resposta. Tente novamente.');
+  box.textContent=data.reply||'Não recebi uma resposta. Tente novamente.';
+ }catch(e){box.textContent='Não consegui conectar ao assistente agora. Verifique se a função de IA foi publicada no Netlify e tente novamente. Detalhe: '+e.message;}
+ finally{btn.disabled=false;btn.textContent='Receber orientação';}
+}
+</script>
+</body></html>
